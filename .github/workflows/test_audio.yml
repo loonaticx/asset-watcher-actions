@@ -41,6 +41,10 @@ jobs:
                 echo "$file was changed"
             done
 
+      - name: Store changed files
+        run: |
+            echo "${{ steps.changed-files.outputs.changed_files }}" >> $CHANGED_FILES
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip

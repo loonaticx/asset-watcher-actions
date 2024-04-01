@@ -21,8 +21,11 @@ def get_all_oggs():
 
 #musicFile = mutagen.File(f'sample/tt_s_ara_dga_trashcan_firstMoveLidFlip3.ogg')
 #musicFile = "sample/tt_s_ara_dga_trashcan_firstMoveLidFlip3.ogg"
-newOggs = os.environ.get("GITHUB_OUTPUT")
-print(f"GITHUB_OUTPUT = {newOggs}")
+outputFilepath = os.environ.get("GITHUB_OUTPUT")
+if outputFilepath:
+    with open(outputFilepath) as coolFile:
+        print(f"cool ~ {coolFile}")
+# print(f"GITHUB_OUTPUT = {newOggs}")
 if fileList:
     print("Checking changed files!!")
     oggs = newOggs.split("|")

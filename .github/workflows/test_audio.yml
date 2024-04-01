@@ -37,9 +37,9 @@ jobs:
 
       - name: List changed files
         run: |
-          for file in ${{ steps.changed-files.outputs.changed_files }}; do
-              echo "$file|" >> $CHANGED_FILES
-          done
+            for file in ${{ steps.changed-files.outputs.changed_files }}; do
+                echo "$file was changed"
+            done
 
       - name: Install dependencies
         run: |

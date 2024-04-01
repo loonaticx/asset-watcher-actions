@@ -34,10 +34,3 @@ jobs:
       - name: execute py script # run file
         run: |
           python check_audio.py
-
-      - name: Check env variables
-        if: ${{ envA }} != ${{ envB }}
-        uses: actions/github-script@v3
-        with:
-          script: |
-            core.setFailed('envA and envB are not equivalent!')

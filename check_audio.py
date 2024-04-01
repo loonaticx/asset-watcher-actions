@@ -24,7 +24,7 @@ def get_all_oggs():
 outputFilepath = os.environ.get("GITHUB_OUTPUT")
 if outputFilepath:
     with open(outputFilepath) as coolFile:
-        print(f"cool ~ {coolFile}")
+        print(f"cool ~ {coolFile.readlines()}")
 # print(f"GITHUB_OUTPUT = {newOggs}")
 if fileList:
     print("Checking changed files!!")

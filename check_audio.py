@@ -3,6 +3,14 @@ import os
 import mutagen
 from mutagen import FileType
 
+args = sys.argv
+print(f"Arrrrghs = {args}")
+fileList = []
+for argVal in args:
+    if argVal.endswith(".ogg"):
+        fileList.append(argVal)
+
+# argFiles
 def get_all_oggs():
     file_list = []
     for dirpath, _, filenames in os.walk(os.getcwd()):
@@ -13,13 +21,14 @@ def get_all_oggs():
 
 #musicFile = mutagen.File(f'sample/tt_s_ara_dga_trashcan_firstMoveLidFlip3.ogg')
 #musicFile = "sample/tt_s_ara_dga_trashcan_firstMoveLidFlip3.ogg"
-newOggs = os.environ.get("CHANGED_FILES")
-print(f"newOggs = {newOggs}")
-if newOggs:
+newOggs = os.environ.get("GITHUB_OUTPUT")
+print(f"GITHUB_OUTPUT = {newOggs}")
+if fileList:
     print("Checking changed files!!")
     oggs = newOggs.split("|")
 else:
     oggs = get_all_oggs()
+
 formattedFiles = []
 for oggFile in oggs:
     print(f"--- {oggFile} ---")

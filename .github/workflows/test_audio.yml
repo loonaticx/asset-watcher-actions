@@ -2,6 +2,9 @@
 
 name: Audio Metadata Detection System
 
+env:
+  DESTINATIONS: ''
+
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
@@ -38,12 +41,9 @@ jobs:
       - name: List changed files
         run: |
             for file in ${{ steps.changed-files.outputs.changed_files }}; do
-                echo "$file was changed"
+                echo "$file was changed" &&
+                DESTINATIONS+=" ${file}"
             done
-
-      - name: Store changed files
-        run: |
-            echo "${{ steps.changed-files.outputs.changed_files }}" >> $CHANGED_FILES
 
       - name: Install dependencies
         run: |
@@ -53,4 +53,4 @@ jobs:
 
       - name: execute py script # run file
         run: |
-          python check_audio.py
+          python check_audio.py $DESTINATIONS

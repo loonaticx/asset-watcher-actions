@@ -10,7 +10,7 @@ formattedFiles = []
 for oggFile in oggs:
     print(f"--- {oggFile} ---")
     mFile = mutagen.File(oggFile)
-    #mFile.tags = None
+    mFile.tags = None
     if mFile.tags:
         print("Has tags!")
         sys.exit(1)

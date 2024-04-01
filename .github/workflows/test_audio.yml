@@ -24,16 +24,28 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-        with:
-            fetch-depth: 0
-      - name: Get changes
-        run: git diff --name-only -r HEAD^1 HEAD
-      - name: Install dependencies
-        run: |
-            python -m pip install --upgrade pip
-            pip install mutagen
-            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      with:
+          fetch-depth: ${{ github.event_name == 'pull_request' && 2 || 0 }}
+    - name: Get changed files
+      id: changed-files
+      run: |
+          if ${{ github.event_name == 'pull_request' }}; then
+              echo "changed_files=$(git diff --name-only -r HEAD^1 HEAD | xargs)" >> $GITHUB_OUTPUT
+          else
+              echo "changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | xargs)" >> $GITHUB_OUTPUT
+          fi
+    - name: List changed files
+      run: |
+          for file in ${{ steps.changed-files.outputs.changed_files }}; do
+              echo "$file|" >> $CHANGED_FILES
+          done
+     
+    - name: Install dependencies
+    run: |
+        python -m pip install --upgrade pip
+        pip install mutagen
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: execute py script # run file
-        run: |
-          python check_audio.py
+    - name: execute py script # run file
+    run: |
+      python check_audio.py

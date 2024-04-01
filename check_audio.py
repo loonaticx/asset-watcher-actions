@@ -13,7 +13,12 @@ def get_all_oggs():
 
 #musicFile = mutagen.File(f'sample/tt_s_ara_dga_trashcan_firstMoveLidFlip3.ogg')
 #musicFile = "sample/tt_s_ara_dga_trashcan_firstMoveLidFlip3.ogg"
-oggs = get_all_oggs()
+newOggs = os.environ.get("CHANGED_FILES")
+if newOggs:
+    print("Checking changed files!!")
+    oggs = newOggs.split("|")
+else:
+    oggs = get_all_oggs()
 formattedFiles = []
 for oggFile in oggs:
     print(f"--- {oggFile} ---")
